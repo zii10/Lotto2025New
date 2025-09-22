@@ -72,8 +72,23 @@ fun Play(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "樂透數字(1-100)為 $lucky"
+            text = "樂透數字(1-100)為 $lucky",
+            modifier = Modifier.pointerInput(Unit) {
+                detectTapGestures(
+                    onTap = {
+                        // 短按 lucky 減 1
+                        lucky--
+                        if (lucky < 1) lucky = 1  // 避免小於 1
+                    },
+                    onLongPress = {
+                        // 長按 lucky 加 1
+                        lucky++
+                        if (lucky > 100) lucky = 100 // 避免大於 100
+                    }
+                )
+            }
         )
+
 
         Button(
             onClick = { lucky = (1..100).random() }
